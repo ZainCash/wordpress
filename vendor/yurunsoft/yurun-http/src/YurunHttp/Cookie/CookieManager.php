@@ -9,7 +9,7 @@ class CookieManager
     /**
      * Cookie 列表.
      *
-     * @var \Yurun\Util\YurunHttp\Cookie\CookieItem[]
+     * @var CookieItem[]
      */
     protected $cookieList;
 
@@ -60,7 +60,7 @@ class CookieManager
     /**
      * 获取 Cookie 列表.
      *
-     * @return array
+     * @return CookieItem[]
      */
     public function getCookieList()
     {
@@ -149,6 +149,7 @@ class CookieManager
         $uriDomain = Uri::getDomain($uri);
         $uriPath = $uri->getPath();
         $cookieList = &$this->cookieList;
+        $time = time();
         foreach ($this->relationMap as $relationDomain => $list1)
         {
             if ('' === $relationDomain || $this->checkDomain($uriDomain, $relationDomain))
@@ -160,7 +161,7 @@ class CookieManager
                         foreach ($idList as $id)
                         {
                             $cookieItem = $cookieList[$id];
-                            if ((0 === $cookieItem->expires || $cookieItem->expires > time()) && (!$cookieItem->secure || 'https' === $uri->getScheme() || 'wss' === $uri->getScheme()))
+                            if ((0 === $cookieItem->expires || $cookieItem->expires > $time) && (!$cookieItem->secure || 'https' === $uri->getScheme() || 'wss' === $uri->getScheme()))
                             {
                                 $result[$cookieItem->name] = $cookieItem->value;
                             }
@@ -213,6 +214,30 @@ class CookieManager
     }
 
     /**
+     * 自动回收过期 Cookie 占用的空间.
+     *
+     * @return void
+     */
+    public function gc()
+    {
+        if ($this->cookieList)
+        {
+            $time = time();
+            foreach ($this->cookieList as $id => $item)
+            {
+                if ($item->expires > 0 && $time >= $item->expires)
+                {
+                    unset($this->cookieList[$id]);
+                    if (isset($this->relationMap[$item->domain][$item->path][$item->name]) && $id === $this->relationMap[$item->domain][$item->path][$item->name])
+                    {
+                        unset($this->relationMap[$item->domain][$item->path][$item->name]);
+                    }
+                }
+            }
+        }
+    }
+
+    /**
      * 检查 uri 域名和 cookie 域名.
      *
      * @param string $uriDomain
@@ -224,7 +249,7 @@ class CookieManager
     {
         return ($uriDomain === $cookieDomain)
                 || (isset($cookieDomain[0]) && '.' === $cookieDomain[0] && substr($uriDomain, -\strlen($cookieDomain) - 1) === '.' . $cookieDomain)
-                ;
+        ;
     }
 
     /**
@@ -268,7 +293,7 @@ class CookieManager
                     $path = \dirname($path);
                 }
             }
-            if ('\\' === \DIRECTORY_SEPARATOR && false !== strpos($path, \DIRECTORY_SEPARATOR))
+            if ('\\' === \DIRECTORY_SEPARATOR && str_contains($path, \DIRECTORY_SEPARATOR))
             {
                 $path = str_replace(\DIRECTORY_SEPARATOR, '/', $path);
             }
