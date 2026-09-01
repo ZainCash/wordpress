@@ -113,33 +113,27 @@
         },
         {
             "name": "yurunsoft/yurun-oauth-login",
-            "version": "v3.0.6",
-            "version_normalized": "3.0.6.0",
+            "version": "v3.1.1",
+            "version_normalized": "3.1.1.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/Yurunsoft/YurunOAuthLogin.git",
-                "reference": "3f67cc3ead9e14963fd0a40efe066530fac60746"
+                "reference": "87c1989dc6abf413bd605b2de9968d40ec5b7eb5"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/Yurunsoft/YurunOAuthLogin/zipball/3f67cc3ead9e14963fd0a40efe066530fac60746",
-                "reference": "3f67cc3ead9e14963fd0a40efe066530fac60746",
-                "shasum": "",
-                "mirrors": [
-                    {
-                        "url": "https://mirrors.aliyun.com/composer/dists/%package%/%reference%.%type%",
-                        "preferred": true
-                    }
-                ]
+                "url": "https://api.github.com/repos/Yurunsoft/YurunOAuthLogin/zipball/87c1989dc6abf413bd605b2de9968d40ec5b7eb5",
+                "reference": "87c1989dc6abf413bd605b2de9968d40ec5b7eb5",
+                "shasum": ""
             },
             "require": {
                 "php": ">=5.5",
-                "yurunsoft/yurun-http": "~4.0"
+                "yurunsoft/yurun-http": "~4.0|~5.0"
             },
             "require-dev": {
                 "friendsofphp/php-cs-fixer": "2.18.3"
             },
-            "time": "2021-12-07T05:56:44+00:00",
+            "time": "2026-07-09T11:56:39+00:00",
             "type": "library",
             "installation-source": "dist",
             "autoload": {
@@ -151,10 +145,20 @@
             "license": [
                 "MIT"
             ],
-            "description": "YurunOAuthLogin是一个PHP 第三方登录授权 SDK，集成了QQ、微信、微博、Github等常用接口。",
+            "authors": [
+                {
+                    "name": "Yurun",
+                    "email": "admin@yurunsoft.com"
+                },
+                {
+                    "name": "Lu Fei",
+                    "email": "lufei@simps.io"
+                }
+            ],
+            "description": "YurunOAuthLogin 是一个 PHP 第三方登录授权 SDK，集成了 QQ、微信、微博、GitHub 等常用接口。",
             "support": {
                 "issues": "https://github.com/Yurunsoft/YurunOAuthLogin/issues",
-                "source": "https://github.com/Yurunsoft/YurunOAuthLogin/tree/v3.0.6"
+                "source": "https://github.com/Yurunsoft/YurunOAuthLogin/tree/v3.1.1"
             },
             "install-path": "../yurunsoft/yurun-oauth-login"
         }
